@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Ordem{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-primary">Editar Ordem de Serviço</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        <a href="{% url 'ordens:listar' %}" class="btn btn-secondary mt-3">Voltar</a>
+    </form>
+</div>
+{% endblock %}

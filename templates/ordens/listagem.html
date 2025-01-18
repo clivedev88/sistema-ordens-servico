@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Ordens de Serviço{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Lista de Ordens de Serviço</h1>
+        <div class="btn-group">
+            <a href="{% url 'ordens:cadastro' %}" class="btn btn-primary btn-sm me-2" data-bs-toggle="tooltip" title="Cadastrar nova ordem">Nova Ordem</a>
+            <a href="{% url 'relatorios:gerar' %}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Baixar relatório em PDF">Baixar Relatório</a>
+
+        </div>
+    </div>
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Descrição</th>
+                <th>Data de Criação</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if ordens %}
+                {% for ordem in ordens %}
+                <tr>
+                    <td class="text-center">{{ ordem.id }}</td>
+                    <td>{{ ordem.cliente }}</td>
+                    <td>{{ ordem.descricao }}</td>
+                    <td>{{ ordem.data_criacao|date:"d/m/Y H:i" }}</td>
+                    <td class="text-center">
+                        {% if ordem.status == 'Aberto' %}
+                            <span class="badge bg-success">Aberto</span>
+                        {% elif ordem.status == 'Fechado' %}
+                            <span class="badge bg-danger">Fechado</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ ordem.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'ordens:editar' ordem.id %}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Editar esta ordem">Editar</a>
+                        <a href="{% url 'ordens:excluir' ordem.id %}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Excluir esta ordem">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Nenhuma ordem encontrada.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+{% endblock %}

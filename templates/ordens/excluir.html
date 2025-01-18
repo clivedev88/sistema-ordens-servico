@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Ordem{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-danger">Excluir Ordem de Serviço</h1>
+    <p>Tem certeza que deseja excluir a ordem de serviço <strong>{{ ordem.cliente }}</strong>?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{% url 'ordens:listar' %}" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

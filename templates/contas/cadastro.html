@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro - Sistema OS{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <h1 class="text-center text-primary mb-4">Cadastro</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+                <small class="text-muted">150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password1" class="form-control" required>
+                <ul class="text-muted small">
+                    <li>Your password can’t be too similar to your other personal information.</li>
+                    <li>Your password must contain at least 8 characters.</li>
+                    <li>Your password can’t be a commonly used password.</li>
+                    <li>Your password can’t be entirely numeric.</li>
+                </ul>
+            </div>
+            <div class="mb-3">
+                <label for="password-confirmation" class="form-label">Password confirmation:</label>
+                <input type="password" id="password-confirmation" name="password2" class="form-control" required>
+                <small class="text-muted">Enter the same password as before, for verification.</small>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Cadastrar</button>
+        </form>
+        <p class="text-center mt-3">
+            Já tem conta? <a href="{% url 'contas:login' %}" class="text-primary">Entrar</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
